@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'OngPets - ' + ${animal.nome}">OngPets - Detalhes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --rosa: #EBA9B5; --creme: #F1EDE1; --azul: #2B5EA9; }
+        body { background-color: var(--creme); font-family: 'Nunito', sans-serif; }
+        nav { background-color: var(--azul); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+        .nav-brand { font-family: 'Fredoka', sans-serif; font-size: 1.6rem; color: var(--creme); text-decoration: none; }
+        .btn-voltar { background: var(--rosa); color: var(--azul); font-weight: 600; border-radius: 50px; padding: 0.4rem 1.2rem; text-decoration: none; font-family: 'Nunito', sans-serif; }
+        .btn-voltar:hover { opacity: 0.85; color: var(--azul); }
+        .card { border: none; border-radius: 16px; }
+        .animal-nome { font-family: 'Fredoka', sans-serif; color: var(--azul); font-size: 2rem; }
+        th { background: var(--creme); color: var(--azul); font-weight: 600; }
+        .btn-rem { background: transparent; color: #c0392b; border: 1.5px solid #c0392b; border-radius: 50px; padding: 0.4rem 1.2rem; cursor: pointer; font-family: 'Nunito', sans-serif; }
+        .btn-rem:hover { background: #c0392b; color: white; }
+        .btn-back { background: transparent; color: var(--azul); border: 1.5px solid var(--azul); border-radius: 50px; padding: 0.4rem 1.2rem; text-decoration: none; font-family: 'Nunito', sans-serif; }
+        .btn-back:hover { background: var(--azul); color: var(--creme); }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-brand" href="/">OngPets</a>
+    <a th:href="@{/animais}" class="btn-voltar">Voltar</a>
+</nav>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <img th:src="${animal.imagemUrl}" class="card-img-top"
+                     style="max-height:350px;object-fit:cover;border-radius:16px 16px 0 0"
+                     onerror="this.src='https://placehold.co/800x350?text=Sem+Imagem'">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h3 class="animal-nome" th:text="${animal.nome}"></h3>
+                        <span th:text="${animal.status}"
+                              th:style="${animal.status == 'Perdido'} ? 'background:#c0392b;color:white;padding:5px 14px;border-radius:50px;font-size:0.9rem;font-weight:600' : 'background:#27ae60;color:white;padding:5px 14px;border-radius:50px;font-size:0.9rem;font-weight:600'"></span>
+                    </div>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="w-25">Espécie</th>
+                            <td th:text="${animal.especie}"></td>
+                        </tr>
+                        <tr>
+                            <th>Raça</th>
+                            <td th:text="${animal.raca}"></td>
+                        </tr>
+                        <tr>
+                            <th>Cidade</th>
+                            <td th:text="${animal.cidade}"></td>
+                        </tr>
+                        <tr>
+                            <th>Data</th>
+                            <td th:text="${animal.dataOcorrencia}"></td>
+                        </tr>
+                        <tr>
+                            <th>Contato</th>
+                            <td th:text="${animal.contato}"></td>
+                        </tr>
+                        <tr>
+                            <th>Descrição</th>
+                            <td th:text="${animal.descricao}"></td>
+                        </tr>
+                    </table>
+
+                    <div class="d-flex gap-2 mt-3">
+                        <a th:href="@{/animais}" class="btn-back">← Voltar</a>
+                        <form th:action="@{/animais/{id}/remover(id=${animal.id})}" method="post" class="ms-auto">
+                            <button type="submit" class="btn-rem" onclick="return confirm('Remover este pet?')">Remover</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

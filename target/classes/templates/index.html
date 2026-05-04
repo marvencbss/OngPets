@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OngPets</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rosa:  #EBA9B5;
+            --creme: #F1EDE1;
+            --azul:  #2B5EA9;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--creme);
+            font-family: 'Nunito', sans-serif;
+            color: #2a2a2a;
+        }
+
+        nav {
+            background-color: var(--azul);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-brand {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.6rem;
+            color: var(--creme);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+        .nav-link-btn {
+            background: var(--rosa);
+            color: var(--azul);
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            padding: 0.4rem 1.2rem;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .nav-link-btn:hover { opacity: 0.85; color: var(--azul); }
+
+        .hero {
+            background-color: var(--azul);
+            color: var(--creme);
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            background: var(--rosa);
+            opacity: 0.18;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -40px;
+            width: 280px; height: 280px;
+            border-radius: 50%;
+            background: var(--rosa);
+            opacity: 0.12;
+        }
+        .hero h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 560px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+        .hero-btn {
+            background: var(--rosa);
+            color: var(--azul);
+            font-weight: 700;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            padding: 0.7rem 2.2rem;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+            display: inline-block;
+        }
+        .hero-btn:hover { transform: translateY(-2px); opacity: 0.9; color: var(--azul); }
+
+        .paw-divider {
+            text-align: center;
+            padding: 1.5rem 0 0;
+            font-size: 1.6rem;
+            letter-spacing: 6px;
+            opacity: 0.35;
+        }
+
+        .sobre {
+            max-width: 800px;
+            margin: 3.5rem auto;
+            padding: 0 1.5rem;
+            text-align: center;
+        }
+        .sobre h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            color: var(--azul);
+            margin-bottom: 1rem;
+        }
+        .sobre p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+        .lei-badge {
+            display: inline-block;
+            background: var(--rosa);
+            color: var(--azul);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 50px;
+            padding: 0.3rem 1rem;
+            margin-top: 1rem;
+        }
+
+        .cards-section {
+            background: white;
+            padding: 3rem 1.5rem;
+        }
+        .cards-section h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            color: var(--azul);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .action-card {
+            border: none;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            height: 100%;
+            transition: transform 0.2s;
+        }
+        .action-card:hover { transform: translateY(-4px); }
+        .action-card.azul  { background: var(--azul);  color: var(--creme); }
+        .action-card.rosa  { background: var(--rosa);  color: var(--azul); }
+        .action-card.creme { background: var(--creme); color: var(--azul); border: 2px solid var(--rosa); }
+        .action-card .icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+        .action-card h5 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .action-card p { font-size: 0.9rem; opacity: 0.85; margin-bottom: 1.2rem; }
+        .card-btn {
+            border-radius: 50px;
+            padding: 0.4rem 1.3rem;
+            font-weight: 600;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: opacity 0.2s;
+            display: inline-block;
+        }
+        .card-btn:hover { opacity: 0.85; }
+        .card-btn.light  { background: var(--creme); color: var(--azul); }
+        .card-btn.dark   { background: var(--azul);  color: var(--creme); }
+        .card-btn.outline { background: transparent; border: 2px solid var(--azul); color: var(--azul); }
+
+        .contato {
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 2rem 1.5rem;
+            background: var(--creme);
+            border-radius: 16px;
+            border: 2px solid var(--rosa);
+            text-align: center;
+        }
+        .contato h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.6rem;
+            color: var(--azul);
+            margin-bottom: 1rem;
+        }
+        .contato p { color: #444; line-height: 1.8; }
+        .contato strong { color: var(--azul); }
+
+        footer {
+            background: var(--azul);
+            color: var(--creme);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        footer .brand {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+        footer p { font-size: 0.85rem; opacity: 0.7; }
+        footer a { color: var(--rosa); text-decoration: none; }
+
+        .paw-svg {
+            display: block;
+            margin: 0 auto 1.5rem;
+            width: 120px;
+            opacity: 0.6;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .paw-svg { animation: bounce 2.5s ease-in-out infinite; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-brand" href="/">OngPets</a>
+    <a href="/animais" class="nav-link-btn">Ver animais</a>
+</nav>
+
+<section class="hero">
+    <svg class="paw-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="50" cy="62" rx="22" ry="18" fill="#F1EDE1" opacity="0.9"/>
+        <ellipse cx="28" cy="48" rx="10" ry="13" fill="#F1EDE1" opacity="0.9"/>
+        <ellipse cx="72" cy="48" rx="10" ry="13" fill="#F1EDE1" opacity="0.9"/>
+        <ellipse cx="38" cy="36" rx="8"  ry="10" fill="#F1EDE1" opacity="0.9"/>
+        <ellipse cx="62" cy="36" rx="8"  ry="10" fill="#F1EDE1" opacity="0.9"/>
+    </svg>
+    <h1>OngPets</h1>
+    <p>Ajudando cães e gatos perdidos a encontrar seus donos em São Leopoldo e região desde 2024.</p>
+    <a href="/animais" class="hero-btn">Ver animais perdidos e encontrados</a>
+    <div class="paw-divider">• • • • •</div>
+</section>
+
+<section class="sobre">
+    <h2>Quem somos</h2>
+    <p>
+        Somos uma organização sem fins lucrativos sediada em <strong>São Leopoldo, RS</strong>,
+        dedicada a conectar tutores e animais perdidos. Atuamos com cadastro, divulgação
+        e apoio à adoção responsável de cães e gatos em toda a região do Vale do Rio dos Sinos.
+        Nossa equipe é formada por voluntários apaixonados por animais que acreditam que todo
+        pet merece um lar seguro.
+    </p>
+    <span class="lei-badge">Autorizada sob a Lei Federal n° 9.605/98 — Crimes Ambientais</span>
+</section>
+
+<section class="cards-section">
+    <h2>Como podemos ajudar?</h2>
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="action-card azul">
+                    <div class="icon">🔍</div>
+                    <h5>Encontrei um animal</h5>
+                    <p>Cadastre um animal encontrado para que o tutor possa localizá-lo.</p>
+                    <a href="/animais/novo" class="card-btn light">Cadastrar</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="action-card rosa">
+                    <div class="icon">📋</div>
+                    <h5>Meu animal se perdeu</h5>
+                    <p>Registre seu pet como perdido e aumente as chances de reencontrá-lo!</p>
+                    <a href="/animais/novo" class="card-btn dark">Registrar</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="action-card creme">
+                    <div class="icon">🐾</div>
+                    <h5>Ver todos os animais</h5>
+                    <p>Consulte a lista completa de animais perdidos e encontrados na região.</p>
+                    <a href="/animais" class="card-btn outline">Ver lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="contato">
+        <h2>Fale conosco</h2>
+        <p>
+            <strong>Telefone:</strong> (51) 94002-8922<br>
+            <strong>Email:</strong> contato@ongpets.org.br<br>
+            <strong>Endereço:</strong> Rua das Flores, 123 — São Leopoldo, RS<br>
+            <strong>Horário:</strong> Segunda a sexta, das 9h às 18h
+        </p>
+    </div>
+</div>
+
+<footer>
+    <div class="brand">OngPets</div>
+    <p>São Leopoldo, RS — Todos os direitos reservados &copy; 2025</p>
+    <p style="margin-top:0.4rem">
+        Desenvolvido com amor por Fernanda Fernandes e Marven Castro |
+        <a href="/animais">Ver animais</a>
+    </p>
+</footer>
+
+</body>
+</html>

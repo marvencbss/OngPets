@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OngPets - Pets Cadastrados</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --rosa: #EBA9B5; --creme: #F1EDE1; --azul: #2B5EA9; }
+        body { background-color: var(--creme); font-family: 'Nunito', sans-serif; }
+        nav { background-color: var(--azul); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+        .nav-brand { font-family: 'Fredoka', sans-serif; font-size: 1.6rem; color: var(--creme); text-decoration: none; }
+        .nav-link-btn { background: var(--rosa); color: var(--azul); font-weight: 600; border-radius: 50px; padding: 0.4rem 1.2rem; text-decoration: none; font-family: 'Nunito', sans-serif; }
+        .nav-link-btn:hover { opacity: 0.85; color: var(--azul); }
+        .page-title { font-family: 'Fredoka', sans-serif; color: var(--azul); font-size: 1.8rem; }
+        .card { border: none; border-radius: 14px; }
+        .card-footer { background: white; border-top: 1px solid #f0e8e8; border-radius: 0 0 14px 14px !important; }
+        .btn-ver { background: var(--azul); color: var(--creme); border-radius: 50px; font-size: 0.85rem; padding: 0.35rem 1rem; border: none; text-decoration: none; }
+        .btn-ver:hover { opacity: 0.85; color: var(--creme); }
+        .btn-rem { background: transparent; color: #c0392b; border: 1.5px solid #c0392b; border-radius: 50px; font-size: 0.85rem; padding: 0.35rem 1rem; cursor: pointer; }
+        .btn-rem:hover { background: #c0392b; color: white; }
+        .filtro-btn { border-radius: 50px; font-size: 0.85rem; font-family: 'Nunito', sans-serif; padding: 0.3rem 1rem; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-brand" href="/">OngPets</a>
+    <a href="/animais/novo" class="nav-link-btn">+ Cadastrar Pet</a>
+</nav>
+
+<div class="container py-4">
+    <h4 class="page-title mb-4">Pets Cadastrados</h4>
+
+    <div class="mb-4 d-flex gap-2 flex-wrap">
+        <a th:href="@{/animais}" class="btn btn-outline-secondary filtro-btn">Todos</a>
+        <a th:href="@{/animais(especie='Cachorro')}" class="btn filtro-btn" style="background:var(--azul);color:var(--creme)">Cachorros</a>
+        <a th:href="@{/animais(especie='Gato')}" class="btn filtro-btn" style="background:var(--rosa);color:var(--azul)">Gatos</a>
+        <a th:href="@{/animais(status='Perdido')}" class="btn btn-outline-danger filtro-btn">Perdidos</a>
+        <a th:href="@{/animais(status='Encontrado')}" class="btn btn-outline-success filtro-btn">Encontrados</a>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4" th:each="animal : ${animais}">
+            <div class="card h-100 shadow-sm">
+                <img th:src="${animal.imagemUrl}" class="card-img-top" style="height:200px;object-fit:cover;border-radius:14px 14px 0 0"
+                     onerror="this.src='https://placehold.co/400x200?text=Sem+Imagem'">
+                <div class="card-body">
+                    <span th:text="${animal.status}"
+                          th:style="${animal.status == 'Perdido'} ? 'background:#c0392b;color:white;padding:3px 10px;border-radius:50px;font-size:0.8rem' : 'background:#27ae60;color:white;padding:3px 10px;border-radius:50px;font-size:0.8rem'"></span>
+                    <h5 class="card-title mt-2" th:text="${animal.nome}" style="font-family:'Fredoka',sans-serif;color:var(--azul)"></h5>
+                    <p class="card-text text-muted" th:text="${animal.especie + ' • ' + animal.raca}"></p>
+                    <p class="card-text" th:text="${animal.cidade}"></p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <a th:href="@{/animais/{id}(id=${animal.id})}" class="btn-ver">Ver detalhes</a>
+                    <form th:action="@{/animais/{id}/remover(id=${animal.id})}" method="post">
+                        <button type="submit" class="btn-rem" onclick="return confirm('Remover este pet?')">Remover</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(animais)}" class="text-center mt-5">
+        <p class="text-muted">Nenhum pet cadastrado ainda.</p>
+        <a href="/animais/novo" style="background:var(--rosa);color:var(--azul);border-radius:50px;font-weight:600;padding:0.5rem 1.5rem;text-decoration:none">Cadastrar primeiro pet</a>
+    </div>
+</div>
+
+</body>
+</html>
