@@ -25,14 +25,14 @@ public class AnimalRepository {
         ));
         animais.add(new Animal(
                 contadorId.getAndIncrement(),
-                "Lara", "Gato", "Siamês",
+                "Lara", "Gato", "Pelagem Siamês",
                 "Gatinha tímida, olhos azuis, possui microchip.",
                 "https://redesuldenoticias.com.br/content/uploads/2018/05/mimi2.jpg",
                 "Canoas", "(51) 91234-5678", "Perdido", "07/12/2024"
         ));
         animais.add(new Animal(
                 contadorId.getAndIncrement(),
-                "Bolinha", "Cachorro", "Poodle",
+                "Bolinha", "Cachorro", "Lulu da Pomerânia",
                 "Encontrado na Av. Independência sem coleira, muito raivoso.",
                 "https://i.redd.it/yui73z7872b71.jpg",
                 "São Leopoldo", "(51) 96666-7777", "Encontrado", "18/02/2025"
